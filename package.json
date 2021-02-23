@@ -1,0 +1,29 @@
+{
+    "name": "mmscan",
+    "version": "0.0.1",
+    "private": true,
+    "license": "MIT",
+    "dependencies": {
+        "mediainfo.js": "^0.1.4",
+        "preact": "^10.5.12",
+        "preact-router": "^3.2.1"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.13.0",
+        "@babel/preset-env": "^7.13.0",
+        "babel-loader": "^8.2.2",
+        "clean-webpack-plugin": "^3.0.0",
+        "css-loader": "^5.0.2",
+        "html-webpack-plugin": "^5.2.0",
+        "style-loader": "^2.0.0",
+        "ts-loader": "^8.0.17",
+        "typescript": "^4.1.5",
+        "webpack": "^5.23.0",
+        "webpack-cli": "^4.5.0",
+        "webpack-dev-server": "^3.11.2"
+    },
+    "scripts": {
+        "build": "webpack",
+        "start": "webpack serve"
+    }
+}
