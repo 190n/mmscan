@@ -1,0 +1,15 @@
+.visually-hidden {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+.drop-target {
+    border: thin solid black;
+    background-color: #0040ff40;
+    min-height: 200px;
+    line-height: 200px;
+    text-align: center;
+}

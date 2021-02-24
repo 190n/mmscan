@@ -35,17 +35,25 @@ module.exports = (env) => ({
     module: {
         rules: [
             {
-                test: /\.css$/i,
-                use: ['style-loader', 'css-loader'],
-            },
-            {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
                 exclude: /node_modules/,
+            },
+            {
+                test: /\.s[ac]ss$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader',
+                ],
             },
         ],
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
+        fallback: {
+            path: require.resolve('path-browserify'),
+            fs: false,
+        },
     },
 });
