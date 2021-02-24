@@ -33,20 +33,20 @@ function App() {
             format: 'text',
         }).then(mi => {
             appendLog('mediainfo loaded');
-            file.arrayBuffer().then(buf => {
-                appendLog('got buffer');
+            let totalBytesRead = 0;
 
-                function getSize() {
-                    return buf.byteLength;
-                }
+            function getSize() {
+                return file.size;
+            }
 
-                function readChunk(size: number, offset: number) {
-                    return new Uint8Array(buf.slice(offset, offset + size));
-                }
+            async function readChunk(size: number, offset: number) {
+                totalBytesRead += size;
+                return new Uint8Array(await file.slice(offset, offset + size).arrayBuffer());
+            }
 
-                (mi.analyzeData(getSize, readChunk) as Promise<Result>).then(result => {
-                    appendLog(result as string);
-                })
+            (mi.analyzeData(getSize, readChunk) as Promise<Result>).then(result => {
+                appendLog(`read ${Math.round(totalBytesRead / 1024)}Ki / ${Math.round(file.size / 1024)}Ki = ${Math.round(totalBytesRead / file.size * 100)}%`)
+                appendLog(result as string);
             });
         });
     }
