@@ -1,9 +1,148 @@
-.visually-hidden {
-    position: absolute !important;
-    height: 1px;
-    width: 1px;
+html {
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
     overflow: hidden;
-    clip: rect(1px, 1px, 1px, 1px);
+}
+
+body {
+    --font: 'Anonymous Pro';
+    --bg: white;
+    --fg: black;
+    --fg-light: #00000080;
+    --primary: #0f893e;
+    --primary-transparent: #0f893e80;
+
+    &.dark {
+        --bg: black;
+        --fg: white;
+        --fg-light: #ffffffc0;
+        --primary: #1cdb65;
+        --primary-transparent: #1cdb6580;
+    }
+
+    font-family: var(--font);
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: var(--bg);
+    color: var(--fg);
+}
+
+#app {
+    width: 100%;
+    max-width: calc(30ch * 2.5 + 1px);
+    margin: auto;
+    // background-image: linear-gradient(#ffffff40, #ffffff40 5%, transparent 5%, transparent);
+    background-size: 100% 1rem;
+}
+
+.Landing {
+    .title {
+        margin: 0 0 2rem;
+        font-weight: normal;
+        color: var(--fg-light);
+        font-size: 2.5rem;
+        height: 3rem;
+
+        strong {
+            font-weight: bold;
+            color: var(--fg);
+        }
+    }
+
+    form {
+        text-align: right;
+        margin-bottom: 3rem;
+
+        input {
+            appearance: none;
+            border: solid var(--fg);
+            box-sizing: border-box;
+            border-width: 0 0 2px;
+            background-color: transparent;
+            color: var(--fg);
+            height: 2rem;
+            font: 1.5rem var(--font);
+            width: 100%;
+            margin-bottom: 1rem;
+            padding: 0;
+            transition: 250ms box-shadow, 250ms border-color;
+
+            &:focus {
+                outline: none;
+                box-shadow: 0 0.4rem 0.4rem -0.4rem var(--primary);
+                border-color: var(--primary);
+            }
+
+            &::placeholder {
+                opacity: 1;
+                color: var(--fg-light);
+            }
+        }
+
+        button {
+            margin-right: 0.2rem;
+        }
+    }
+
+    p {
+        text-align: center;
+        margin: 0;
+    }
+}
+
+.button {
+    appearance: none;
+    border: none;
+    background-color: transparent;
+    height: 1rem;
+    font: 1rem var(--font);
+    color: var(--fg);
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+    line-height: 1rem;
+    transition: 250ms background-color, 250ms box-shadow;
+
+    &:focus {
+        outline: none;
+
+        &:not(.filled) {
+            background-color: var(--primary-transparent);
+            box-shadow: 0 0 0 0.2rem var(--primary-transparent);
+        }
+
+        &.filled {
+            box-shadow: 0 0 0 0.2rem var(--fg), 0 0 0 0.4rem var(--primary);
+        }
+    }
+
+    &::-moz-focus-inner {
+        border: 0;
+    }
+
+    &.filled {
+        background-color: var(--fg);
+        color: var(--bg);
+        text-decoration: none;
+        padding: 0 0.2rem;
+        box-shadow: 0 0 0 0.2rem var(--fg);
+    }
+}
+
+// .visually-hidden {
+//     position: absolute !important;
+//     height: 1px;
+//     width: 1px;
+//     overflow: hidden;
+//     clip: rect(1px, 1px, 1px, 1px);
+// }
+
+.hidden {
+    display: none;
 }
 
 .drop-target {

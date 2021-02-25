@@ -8,12 +8,14 @@ module.exports = (env) => ({
     devtool: 'inline-source-map',
     devServer: {
         contentBase: './dist',
+        historyApiFallback: true,
     },
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             title: 'mmscan',
             inject: 'body',
+            publicPath: '/',
         }),
     ],
     output: {
