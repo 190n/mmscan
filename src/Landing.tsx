@@ -1,10 +1,8 @@
 import { h } from 'preact';
-import { useState, useRef } from 'preact/hooks';
+import { useState, useRef, useEffect } from 'preact/hooks';
 import { route } from 'preact-router';
 
-interface LandingProps {
-    
-}
+import DropTarget from './DropTarget';
 
 export default function Landing() {
     const [url, setURL] = useState('');
@@ -62,6 +60,7 @@ export default function Landing() {
             >
                 swap theme
             </button>
+            <DropTarget />
         </div>
     );
 }
