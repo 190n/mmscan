@@ -3,12 +3,21 @@ import { useState, useRef, useEffect } from 'preact/hooks';
 import { route } from 'preact-router';
 
 import { useFiles } from './FilesContext';
-import DropTarget from './DropTarget';
+import useDragAndDrop from './useDragAndDrop';
 
 export default function Landing() {
     const [url, setURL] = useState('');
     const fileInput = useRef<HTMLInputElement>(null);
     const [_, setFiles] = useFiles();
+
+    function handleFiles(files: FileList) {
+        setFiles(files);
+        route('/results');
+    }
+
+    useDragAndDrop({
+        filesCallback: handleFiles,
+    });
 
     function handleSubmit() {
         route(`/${url}`);
@@ -18,11 +27,6 @@ export default function Landing() {
         if (e.key == ' ' || e.key == 'Enter') {
             fileInput.current?.click();
         }
-    }
-
-    function handleFiles(files: FileList) {
-        setFiles(files);
-        route('/results');
     }
 
     return (
@@ -68,7 +72,6 @@ export default function Landing() {
             >
                 swap theme
             </button>
-            <DropTarget />
         </div>
     );
 }

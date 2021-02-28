@@ -1,17 +1,21 @@
-import { h } from 'preact';
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect } from 'preact/hooks';
 
-export default function DropTarget() {
+export interface UseDragAndDropOptions {
+    filesCallback?: (files: FileList) => void;
+    dragOverCallback?: (x: number, y: number) => void;
+}
+
+export default function useDragAndDrop({ filesCallback, dragOverCallback }: UseDragAndDropOptions) {
     function drop(e: DragEvent) {
         e.stopPropagation();
         e.preventDefault();
-        console.log('drop');
+        filesCallback?.(e.dataTransfer.files);
     }
 
     function dragOver(e: DragEvent) {
         e.stopPropagation();
         e.preventDefault();
-        console.log('dragover');
+        dragOverCallback?.(e.pageX, e.pageY);
     }
 
     useEffect(() => {
@@ -23,8 +27,4 @@ export default function DropTarget() {
             document.body.removeEventListener('dragover', dragOver, false);
         };
     }, []);
-
-    return (
-        <div></div>
-    );
 }
