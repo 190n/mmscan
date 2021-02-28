@@ -73,7 +73,7 @@ body {
 
             &:focus {
                 outline: none;
-                box-shadow: 0 0.4rem 0.4rem -0.4rem var(--primary);
+                box-shadow: 0 0.4rem 0.2rem -0.2rem var(--primary-transparent);
                 border-color: var(--primary);
             }
 
