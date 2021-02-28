@@ -1,14 +1,15 @@
 import { h } from 'preact';
-import { useState, useRef, useEffect } from 'preact/hooks';
+import { useState, useRef } from 'preact/hooks';
 import { route } from 'preact-router';
+import { useRecoilState } from 'recoil';
 
-import { useFiles } from './FilesContext';
+import { filesState } from './state';
 import useDragAndDrop from './useDragAndDrop';
 
 export default function Landing() {
     const [url, setURL] = useState('');
     const fileInput = useRef<HTMLInputElement>(null);
-    const [_, setFiles] = useFiles();
+    const [_, setFiles] = useRecoilState(filesState);
 
     function handleFiles(files: FileList) {
         setFiles(files);

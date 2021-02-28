@@ -1,11 +1,12 @@
 import { h, Fragment } from 'preact';
 import { route } from 'preact-router';
+import { useRecoilState } from 'recoil';
 
-import { useFiles } from './FilesContext';
+import { filesState } from './state';
 import Analyze from './Analyze';
 
 export default function FromUpload() {
-    const [files] = useFiles();
+    const [files] = useRecoilState(filesState);
 
     if (files === undefined) {
         route('/');

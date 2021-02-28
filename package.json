@@ -7,7 +7,8 @@
         "mediainfo.js": "^0.1.4",
         "path-browserify": "^1.0.1",
         "preact": "^10.5.12",
-        "preact-router": "^3.2.1"
+        "preact-router": "^3.2.1",
+        "recoil": "^0.1.2"
     },
     "devDependencies": {
         "@babel/core": "^7.13.0",

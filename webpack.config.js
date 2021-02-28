@@ -57,5 +57,9 @@ module.exports = (env) => ({
             path: require.resolve('path-browserify'),
             fs: false,
         },
+        alias: {
+            'react': 'preact/compat',
+            'react-dom': 'preact/compat',
+        },
     },
 });
