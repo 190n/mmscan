@@ -14,7 +14,7 @@ body {
     --primary-transparent: #0f893e80;
 
     &.dark {
-        --bg: black;
+        --bg: #080808;
         --fg: white;
         --fg-light: #ffffffc0;
         --primary: #1cdb65;
@@ -73,7 +73,7 @@ body {
 
             &:focus {
                 outline: none;
-                box-shadow: 0 0.4rem 0.2rem -0.2rem var(--primary-transparent);
+                box-shadow: 0 0.3rem 0.2rem -0.2rem var(--primary-transparent);
                 border-color: var(--primary);
             }
 
