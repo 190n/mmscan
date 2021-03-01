@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { Router, Route } from 'preact-router';
+import { Router, Route, route } from 'preact-router';
 import { RecoilRoot } from 'recoil';
 
 import Landing from './Landing';
@@ -17,3 +17,28 @@ export default function App() {
         </RecoilRoot>
     );
 }
+
+
+function Page1() {
+    function handleFiles(files: FileList) {
+        console.log(files);
+        route('/page2');
+    }
+
+    return (
+        <input type="file" onInput={e => handleFiles(e.currentTarget.files)} />
+    );
+}
+
+function Page2() {
+    return <p>page 2</p>;
+}
+
+// export default function App() {
+//     return (
+//         <Router>
+//             <Route path="/" component={Page1} />
+//             <Route path="/page2" component={Page2} />
+//         </Router>
+//     );
+// }

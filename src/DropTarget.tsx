@@ -1,11 +1,12 @@
+import { h, Fragment } from 'preact';
 import { useEffect } from 'preact/hooks';
 
-export interface UseDragAndDropOptions {
+export interface DropTargetProps {
     filesCallback?: (files: FileList) => void;
     dragOverCallback?: (x: number, y: number) => void;
 }
 
-export default function useDragAndDrop({ filesCallback, dragOverCallback }: UseDragAndDropOptions) {
+export default function DropTarget({ filesCallback, dragOverCallback }: DropTargetProps) {
     function drop(e: DragEvent) {
         e.stopPropagation();
         e.preventDefault();
@@ -27,4 +28,8 @@ export default function useDragAndDrop({ filesCallback, dragOverCallback }: UseD
             document.body.removeEventListener('dragover', dragOver, false);
         };
     }, []);
+
+    return (
+        <Fragment />
+    );
 }

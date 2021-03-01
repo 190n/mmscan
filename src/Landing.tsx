@@ -1,24 +1,20 @@
 import { h } from 'preact';
 import { useState, useRef } from 'preact/hooks';
 import { route } from 'preact-router';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 import { filesState } from './state';
-import useDragAndDrop from './useDragAndDrop';
+import DropTarget from './DropTarget';
 
 export default function Landing() {
     const [url, setURL] = useState('');
     const fileInput = useRef<HTMLInputElement>(null);
-    const [_, setFiles] = useRecoilState(filesState);
+    const setFiles = useSetRecoilState(filesState);
 
     function handleFiles(files: FileList) {
         setFiles(files);
         route('/results');
     }
-
-    useDragAndDrop({
-        filesCallback: handleFiles,
-    });
 
     function handleSubmit() {
         route(`/${url}`);
@@ -73,6 +69,7 @@ export default function Landing() {
             >
                 swap theme
             </button>
+            <DropTarget filesCallback={handleFiles} />
         </div>
     );
 }

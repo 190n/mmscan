@@ -9,7 +9,6 @@ export default function FromUpload() {
     const [files] = useRecoilState(filesState);
 
     if (files === undefined) {
-        route('/');
         return <Fragment />;
     }
 
