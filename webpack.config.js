@@ -3,12 +3,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = (env) => ({
-    mode: env.NODE_ENV ?? 'development',
+    mode: env.NODE_ENV || 'development',
     entry: './src/index.tsx',
     devtool: 'inline-source-map',
     devServer: {
         contentBase: './dist',
-        historyApiFallback: true,
+        historyApiFallback: {
+            rewrites: [
+                { from: /^\/https?/, to: '/index.html' }
+            ]
+        }
     },
     plugins: [
         new CleanWebpackPlugin(),
