@@ -1,19 +1,10 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-module.exports = (env) => ({
-    mode: env.NODE_ENV ?? 'development',
+module.exports = {
     entry: './src/index.tsx',
-    devtool: 'inline-source-map',
-    devServer: {
-        contentBase: './dist',
-        historyApiFallback: {
-            rewrites: [
-                { from: /^\/https?/, to: '/index.html' }
-            ]
-        }
-    },
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
@@ -21,6 +12,7 @@ module.exports = (env) => ({
             inject: 'body',
             publicPath: '/',
         }),
+        new MiniCssExtractPlugin(),
     ],
     output: {
         filename: '[name].[contenthash].js',
@@ -48,7 +40,7 @@ module.exports = (env) => ({
             {
                 test: /\.s[ac]ss$/,
                 use: [
-                    'style-loader',
+                    MiniCssExtractPlugin.loader,
                     'css-loader',
                     'sass-loader',
                 ],
@@ -66,4 +58,4 @@ module.exports = (env) => ({
             'react-dom': 'preact/compat',
         },
     },
-});
+};
