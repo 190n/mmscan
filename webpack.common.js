@@ -12,7 +12,9 @@ module.exports = {
             inject: 'body',
             publicPath: '/',
         }),
-        new MiniCssExtractPlugin(),
+        new MiniCssExtractPlugin({
+            filename: '[name].[contenthash].css'
+        }),
     ],
     output: {
         filename: '[name].[contenthash].js',
