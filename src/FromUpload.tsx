@@ -22,7 +22,5 @@ export default function FromUpload() {
         return new Uint8Array(await file.slice(offset, offset + size).arrayBuffer());
     }
 
-    return (
-        <Analyze getSize={getSize} readChunk={readChunk} />
-    );
+    return <Analyze getSize={getSize} readChunk={readChunk} />;
 }
