@@ -15,9 +15,9 @@ export default function FromURL({ url }: FromURLProps) {
     useEffect(() => {
         fetch(url, {
             method: 'HEAD',
-            mode: 'no-cors',
+            mode: 'cors',
         }).then(response => {
-            console.log(response.headers);
+            console.log(response.headers.get('Accept-Ranges'));
         });
     }, []);
 
@@ -29,5 +29,6 @@ export default function FromURL({ url }: FromURLProps) {
 
     }
 
-    return <Analyze getSize={getSize} readChunk={readChunk} ready={ready} />
+    // return <Analyze getSize={getSize} readChunk={readChunk} ready={ready} />
+    return <h1>FromURL</h1>;
 }
