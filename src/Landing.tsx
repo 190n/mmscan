@@ -12,8 +12,12 @@ export default function Landing() {
     const setFiles = useSetRecoilState(filesState);
 
     function handleFiles(files: FileList) {
-        setFiles(files);
-        route('/results');
+        let id = Math.floor(Math.random() * 36 ** 4).toString(36);
+        while (id.length < 4) {
+            id = '0' + id;
+        }
+        setFiles({ id, files });
+        route(`/results/${id}`);
     }
 
     function handleSubmit() {

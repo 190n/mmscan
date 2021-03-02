@@ -1,8 +1,8 @@
 import { atom } from 'recoil';
 
-export const filesState = atom<FileList | undefined>({
+export const filesState = atom<{ id: string, files?: FileList }>({
     key: 'filesState',
-    default: undefined,
+    default: { id: '' },
     dangerouslyAllowMutability: true, // Object.freeze throws error when called on FileList
 });
 

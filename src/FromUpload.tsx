@@ -1,13 +1,17 @@
 import { h, Fragment } from 'preact';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import { filesState } from './state';
 import Analyze from './Analyze';
 
-export default function FromUpload() {
-    const [files] = useRecoilState(filesState);
+export interface FromUploadProps {
+    id: string;
+}
 
-    if (files === undefined) {
+export default function FromUpload({ id }: FromUploadProps) {
+    const { id: stateId, files } = useRecoilValue(filesState);
+
+    if (files === undefined || stateId != id) {
         return <Fragment />;
     }
 
