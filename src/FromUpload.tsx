@@ -1,5 +1,4 @@
 import { h, Fragment } from 'preact';
-import { route } from 'preact-router';
 import { useRecoilState } from 'recoil';
 
 import { filesState } from './state';
