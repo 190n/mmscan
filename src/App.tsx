@@ -12,6 +12,7 @@ export default function App() {
             <Router>
                 <Route path="/" component={Landing} />
                 <Route path="/results/:id" component={FromUpload} />
+                <Route path="/results" component={FromUpload} />
                 <Route path="/:url+" component={FromURL} />
             </Router>
         </RecoilRoot>

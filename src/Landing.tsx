@@ -16,6 +16,7 @@ export default function Landing() {
         while (id.length < 4) {
             id = '0' + id;
         }
+
         setFiles({ id, files });
         route(`/results/${id}`);
     }

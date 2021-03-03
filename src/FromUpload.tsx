@@ -1,17 +1,23 @@
 import { h, Fragment } from 'preact';
 import { useRecoilValue } from 'recoil';
+import { route } from 'preact-router';
 
 import { filesState } from './state';
 import Analyze from './Analyze';
 
 export interface FromUploadProps {
-    id: string;
+    id?: string;
 }
 
 export default function FromUpload({ id }: FromUploadProps) {
     const { id: stateId, files } = useRecoilValue(filesState);
 
-    if (files === undefined || stateId != id) {
+    if (files === undefined) {
+        return <Fragment />;
+    } else if (stateId == id) {
+        route('/results', true);
+        return <Fragment />;
+    } else if (id !== undefined) {
         return <Fragment />;
     }
 
