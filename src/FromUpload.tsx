@@ -4,6 +4,7 @@ import { route } from 'preact-router';
 
 import { filesState } from './state';
 import Analyze from './Analyze';
+import Uploader from './Uploader';
 
 export interface FromUploadProps {
     id?: string;
@@ -31,5 +32,10 @@ export default function FromUpload({ id }: FromUploadProps) {
         return new Uint8Array(await file.slice(offset, offset + size).arrayBuffer());
     }
 
-    return <Analyze getSize={getSize} readChunk={readChunk} />;
+    return (
+        <>
+            <Uploader>upload another</Uploader><br />
+            <Analyze getSize={getSize} readChunk={readChunk} />
+        </>
+    );
 }
