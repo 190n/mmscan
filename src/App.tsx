@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { Router, Route, route } from 'preact-router';
+import { Router, Route } from 'preact-router';
 import { RecoilRoot } from 'recoil';
 
 import Landing from './Landing';

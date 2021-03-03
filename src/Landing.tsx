@@ -1,14 +1,14 @@
 import { h } from 'preact';
-import { useState, useRef } from 'preact/hooks';
+import { useState } from 'preact/hooks';
 import { route } from 'preact-router';
 import { useSetRecoilState } from 'recoil';
 
 import { filesState } from './state';
 import DropTarget from './DropTarget';
+import Uploader from './Uploader';
 
 export default function Landing() {
     const [url, setURL] = useState('');
-    const fileInput = useRef<HTMLInputElement>(null);
     const setFiles = useSetRecoilState(filesState);
 
     function handleFiles(files: FileList) {
@@ -23,12 +23,6 @@ export default function Landing() {
 
     function handleSubmit() {
         route(`/${url}`);
-    }
-
-    function handleKeyPress(e: KeyboardEvent) {
-        if (e.key == ' ' || e.key == 'Enter') {
-            fileInput.current?.click();
-        }
     }
 
     return (
@@ -47,25 +41,7 @@ export default function Landing() {
                 </button>
             </form>
             <p>
-                <input
-                    type="file"
-                    class="hidden"
-                    id="file-input"
-                    ref={fileInput}
-                    onInput={e => handleFiles(e.currentTarget.files)}
-                />
-                <label for="file-input">
-                    <span
-                        class="button"
-                        role="button"
-                        aria-controls="filename"
-                        tabIndex={0}
-                        onKeyPress={handleKeyPress}
-                        onKeyUp={handleKeyPress}
-                    >
-                        choose file
-                    </span>
-                </label> or drop anywhere on the page
+                <Uploader>choose file</Uploader> or drop anywhere on the page
             </p>
             <button
                 style="position: absolute; left: 4px; bottom: 4px;"
