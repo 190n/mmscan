@@ -42,7 +42,7 @@ export default function Uploader({ children }: UploaderProps) {
                 <span
                     class="button"
                     role="button"
-                    aria-controls="filename"
+                    aria-controls="file-input"
                     tabIndex={0}
                     onKeyPress={handleKeyPress}
                     onKeyUp={handleKeyPress}
