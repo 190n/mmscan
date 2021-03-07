@@ -148,3 +148,12 @@ body {
 pre {
     font-family: var(--font);
 }
+
+.Analyze {
+    h1 {
+        text-indent: -2ch;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        word-break: break-all;
+    }
+}

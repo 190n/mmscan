@@ -34,8 +34,8 @@ export default function FromUpload({ id }: FromUploadProps) {
 
     return (
         <>
-            <Uploader>upload another</Uploader><br />
-            <Analyze getSize={getSize} readChunk={readChunk} />
+            <Uploader>upload another</Uploader>
+            <Analyze getSize={getSize} readChunk={readChunk} filename={file.name} />
         </>
     );
 }

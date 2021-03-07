@@ -9,9 +9,10 @@ export interface AnalyzeProps {
     getSize: () => number | Promise<number>;
     readChunk: (size: number, offset: number) => Promise<Uint8Array>;
     ready?: boolean;
+    filename: string;
 }
 
-export default function Analyze({ getSize, readChunk, ready = true }: AnalyzeProps) {
+export default function Analyze({ getSize, readChunk, filename, ready = true }: AnalyzeProps) {
     const [output, setOutput] = useState('');
     const [status, setStatus] = useState('');
     const [progress, setProgress] = useState<number | undefined>(undefined);
@@ -54,6 +55,7 @@ export default function Analyze({ getSize, readChunk, ready = true }: AnalyzePro
 
     return (
         <div class="Analyze">
+            <h1>$ mediainfo {filename}</h1>
             {working && (
                 <p>
                     {status}
