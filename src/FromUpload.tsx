@@ -5,6 +5,7 @@ import { route } from 'preact-router';
 import { filesState } from './state';
 import Analyze from './Analyze';
 import Uploader from './Uploader';
+import Status from './Status';
 
 export interface FromUploadProps {
     id?: string;
@@ -35,6 +36,7 @@ export default function FromUpload({ id }: FromUploadProps) {
     return (
         <>
             <Uploader>upload another</Uploader>
+            <Status />
             <Analyze getSize={getSize} readChunk={readChunk} filename={file.name} />
         </>
     );

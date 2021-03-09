@@ -1,9 +1,9 @@
 import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 import MediaInfo from 'mediainfo.js';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
-import { wasmObjectURLState } from './state';
+import { statusState, progressState, workingState, wasmObjectURLState } from './state';
 
 export interface AnalyzeProps {
     getSize: () => number | Promise<number>;
@@ -14,9 +14,9 @@ export interface AnalyzeProps {
 
 export default function Analyze({ getSize, readChunk, filename, ready = true }: AnalyzeProps) {
     const [output, setOutput] = useState('');
-    const [status, setStatus] = useState('');
-    const [progress, setProgress] = useState<number | undefined>(undefined);
-    const [working, setWorking] = useState(false);
+    const setStatus = useSetRecoilState(statusState);
+    const setProgress = useSetRecoilState(progressState);
+    const setWorking = useSetRecoilState(workingState);
     const [wasmObjectURL, setWasmObjectURL] = useRecoilState(wasmObjectURLState);
 
     useEffect(() => {
@@ -55,17 +55,7 @@ export default function Analyze({ getSize, readChunk, filename, ready = true }: 
 
     return (
         <div class="Analyze">
-            <h1>$ mediainfo {filename}</h1>
-            {working && (
-                <p>
-                    {status}
-                    {typeof progress == 'number' ? (
-                        <progress value={progress}>{Math.round(progress * 100)}%</progress>
-                    ) : (
-                        <progress>(working)</progress>
-                    )}
-                </p>
-            )}
+            <h1>$ mediainfo <strong>{filename}</strong></h1>
             <pre>{output}</pre>
         </div>
     );

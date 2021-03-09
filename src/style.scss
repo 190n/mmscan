@@ -155,5 +155,10 @@ pre {
         font-size: 1.5rem;
         line-height: 2rem;
         word-break: break-all;
+        color: var(--fg-light);
+
+        strong {
+            color: var(--fg);
+        }
     }
 }
