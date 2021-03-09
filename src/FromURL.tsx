@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { useState, useEffect, useReducer } from 'preact/hooks';
 
-import { PROXY_URL, FETCH_MODE } from './config';
+import { PROXY_URL } from './config';
 import Analyze from './Analyze';
 
 interface FromURLProps {
@@ -19,15 +19,24 @@ export default function FromURL({ url }: FromURLProps) {
     const [log, appendLog] = useReducer(logReducer, []);
 
     useEffect(() => {
+        // 2021-03-06
+        // can't get any headers from a cors request
+        // send HEAD through proxy to determine if ranges work, file size, and whether the real one
+        // needs to go through proxy (peek access-control-allow-origin; netlify passes that header through!)
+        // now might need to run a proxy server in development (on the same port), since the cors proxy just always sets ACAO to *
+
         fetch(PROXY_URL + url, {
             method: 'HEAD',
-            mode: FETCH_MODE,
+            mode: 'same-origin',
         }).then(response => {
             const supportsRange = response.headers.get('accept-ranges') == 'bytes';
             setSupportsRange(supportsRange);
             appendLog(supportsRange ? 'Range requests supported' : 'Range requests not supported');
-            setSize(parseInt(response.headers.get('content-length')));
-            appendLog(`Size is ${response.headers.get('content-length')} bytes`);
+            const size = parseInt(response.headers.get('content-length'));
+            setSize(size);
+            appendLog(`Size is ${size} bytes`);
+        }).catch(e => {
+            console.log(`CAUGHT ERROR ${e}`);
         });
     }, []);
 
