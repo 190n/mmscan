@@ -25,3 +25,15 @@ export const wasmObjectURLState = atom<string | undefined>({
     key: 'wasmObjectURLState',
     default: undefined,
 });
+
+export enum LogSeverity { Info, Warning, Error };
+
+export interface LogMessage {
+    text: string;
+    severity: LogSeverity;
+}
+
+export const logState = atom<LogMessage[]>({
+    key: 'logState',
+    default: [],
+});
