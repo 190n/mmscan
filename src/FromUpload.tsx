@@ -32,7 +32,7 @@ export default function FromUpload({ id }: FromUploadProps) {
     }
 
     async function readChunk(size: number, offset: number) {
-        log({ severity: LogSeverity.Info, text: `read ${size} bytes at ${offset}` });
+        log(`read ${size} bytes at ${offset}`);
         return new Uint8Array(await file.slice(offset, offset + size).arrayBuffer());
     }
 

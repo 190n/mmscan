@@ -26,7 +26,7 @@ export const wasmObjectURLState = atom<string | undefined>({
     default: undefined,
 });
 
-export enum LogSeverity { Info, Warning, Error };
+export enum LogSeverity { Debug, Info, Warning, Error };
 
 export interface LogMessage {
     text: string;

@@ -1,13 +1,18 @@
 import { h } from 'preact';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 
-import { logState, LogMessage, LogSeverity } from './state';
+import { logState, LogSeverity } from './state';
+import { MIN_LOG_LEVEL } from './config';
 
 export function useLogger() {
     const setLog = useSetRecoilState(logState);
 
-    return function logger(message: LogMessage) {
-        setLog(currentLog => currentLog.concat([message]));
+    return function logger(text: string, severity: LogSeverity = LogSeverity.Info) {
+        if (severity >= MIN_LOG_LEVEL) {
+            setLog(currentLog => currentLog.concat([{ text, severity }]));
+        }
+
+        console.log(`[${LogSeverity[severity]}] ${text}`);
     }
 }
 
