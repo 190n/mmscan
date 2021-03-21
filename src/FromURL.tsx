@@ -12,45 +12,71 @@ interface FromURLProps {
     url: string;
 }
 
-function logReducer(state: string[], action: string): string[] {
-    return [...state, action];
-}
+enum URLStatus { Yes, Maybe, No };
 
 export default function FromURL({ url }: FromURLProps) {
     const [ready, setReady] = useState(false);
     const [totalSize, setTotalSize] = useState(0);
     const [usingProxy, setUsingProxy] = useState(false);
+    const [failed, setFailed] = useState(false);
     const setStatus = useSetRecoilState(statusState);
     const setProgress = useSetRecoilState(progressState);
     const setWorking = useSetRecoilState(workingState);
-    const totalTransferred = useRef(0);
     const log = useLogger();
 
     useEffect(() => {
         (async () => {
-            async function checkUrl(url: string) {
-                const response = await fetch(url, {
-                    mode: 'cors',
-                    method: 'HEAD',
-                });
+            async function checkUrl(url: string): Promise<URLStatus> {
+                try {
+                    const response = await fetch(url, {
+                        mode: 'cors',
+                        method: 'HEAD',
+                    });
 
-                if (!response.ok) {
-                    log('response not ok', LogSeverity.Debug);
-                }
+                    if (!response.ok) {
+                        log(`HTTP error: ${response.status} ${response.statusText}`, LogSeverity.Error);
+                        return URLStatus.No;
+                    }
 
-                if (!response.headers.get('accept-ranges')?.includes('bytes')) {
-                    log('server does not support range requests!', LogSeverity.Error);
-                    return; // TODO set error state, suggest downloading file manually
+                    if (!response.headers.get('accept-ranges')?.includes('bytes')) {
+                        log('server does not support range requests!', LogSeverity.Error);
+                        return URLStatus.No;
+                    }
+
+                    setTotalSize(parseInt(response.headers.get('content-length')));
+                    return URLStatus.Yes;
+                } catch (e) {
+                    // might be possible with proxy
+                    log(`checkUrl caught error ${e}`, LogSeverity.Debug);
+                    return URLStatus.Maybe;
                 }
             }
 
             // fetch first without a proxy to see if we can
             // if this errors, either we need a proxy or range requests aren't supported
-            try {
-                checkUrl(url);
-            } catch (e) {
-                log('fetch threw error', LogSeverity.Debug);
-                checkUrl(PROXY_URL + url);
+            switch (await checkUrl(url)) {
+                case URLStatus.Yes:
+                    // go ahead with request
+                    log('no proxy needed', LogSeverity.Debug);
+                    setUsingProxy(true);
+                    setReady(true);
+                    break;
+                case URLStatus.Maybe:
+                    // try proxy
+                    if (await checkUrl(PROXY_URL + url) == URLStatus.Yes) {
+                        setUsingProxy(true);
+                        setReady(true);
+                        log('Using a proxy server. Only 16 MiB per request may be sent through the proxy server.');
+                    } else {
+                        setFailed(true);
+                        log('If you can access the file through your browser, try downloading it and uploading it to mmscan.');
+                    }
+                    break;
+                case URLStatus.No:
+                    // can't do it
+                    setFailed(true);
+                    log('If you can access the file through your browser, try downloading it and uploading it to mmscan.');
+                    break;
             }
         })();
     }, []);
@@ -58,8 +84,20 @@ export default function FromURL({ url }: FromURLProps) {
     const getSize = useCallback(() => totalSize, [totalSize]);
 
     const readChunk = useCallback(async (size: number, offset: number) => {
-        throw 'abort';
-    }, [url, usingProxy, supportsRange]);
+        if (size == 0) {
+            return new Uint8Array(0);
+        }
+
+        const fetchUrl = usingProxy ? PROXY_URL + url : url,
+            response = await fetch(fetchUrl, {
+                headers: {
+                    Range: `bytes=${offset}-${offset + size - 1}`,
+                },
+            }),
+            buf = await response.arrayBuffer();
+
+        return new Uint8Array(buf);
+    }, [url, usingProxy]);
 
     return (
         <>
