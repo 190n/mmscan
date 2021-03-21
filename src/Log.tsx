@@ -4,6 +4,13 @@ import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { logState, LogSeverity } from './state';
 import { MIN_LOG_LEVEL } from './config';
 
+const logIcons: Record<LogSeverity, string> = {
+    [LogSeverity.Debug]:   '\u{1f41b}',
+    [LogSeverity.Info]:    '\u{1f6c8}',
+    [LogSeverity.Warning]: '\u26a0',
+    [LogSeverity.Error]:   '!\u20dd',
+};
+
 export function useLogger() {
     const setLog = useSetRecoilState(logState);
 
@@ -23,7 +30,7 @@ export default function Log() {
         <ol class="Log">
             {log.map(({ text, severity }) => (
                 <li>
-                    [{LogSeverity[severity]}]
+                    [{LogSeverity[severity]}] {logIcons[severity]}
                     {text}
                 </li>
             ))}
