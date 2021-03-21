@@ -6,7 +6,7 @@ import { filesState, LogSeverity } from './state';
 import Analyze from './Analyze';
 import Uploader from './Uploader';
 import Status from './Status';
-import Log, { useLogger } from './Log';
+import Log from './Log';
 
 export interface FromUploadProps {
     id?: string;
@@ -14,7 +14,6 @@ export interface FromUploadProps {
 
 export default function FromUpload({ id }: FromUploadProps) {
     const { id: stateId, files } = useRecoilValue(filesState);
-    const log = useLogger();
 
     if (files === undefined) {
         return <Fragment />;
@@ -32,7 +31,6 @@ export default function FromUpload({ id }: FromUploadProps) {
     }
 
     async function readChunk(size: number, offset: number) {
-        log(`read ${size} bytes at ${offset}`);
         return new Uint8Array(await file.slice(offset, offset + size).arrayBuffer());
     }
 

@@ -4,7 +4,7 @@
     "private": true,
     "license": "MIT",
     "dependencies": {
-        "mediainfo.js": "^0.1.4",
+        "mediainfo.js": "^0.1.5",
         "path-browserify": "^1.0.1",
         "preact": "^10.5.12",
         "preact-router": "^3.2.1",

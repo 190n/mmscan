@@ -3,7 +3,9 @@ import { useState, useEffect } from 'preact/hooks';
 import MediaInfo from 'mediainfo.js';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
-import { statusState, progressState, workingState, wasmObjectURLState } from './state';
+import { WASM_MODULE_URL, CHUNK_SIZE } from './config';
+import { statusState, progressState, workingState, wasmObjectURLState, LogSeverity } from './state';
+import { useLogger } from './Log';
 
 export interface AnalyzeProps {
     getSize: () => number | Promise<number>;
@@ -18,6 +20,7 @@ export default function Analyze({ getSize, readChunk, filename, ready = true }: 
     const setProgress = useSetRecoilState(progressState);
     const setWorking = useSetRecoilState(workingState);
     const [wasmObjectURL, setWasmObjectURL] = useRecoilState(wasmObjectURLState);
+    const log = useLogger();
 
     useEffect(() => {
         if (ready) {
@@ -28,7 +31,7 @@ export default function Analyze({ getSize, readChunk, filename, ready = true }: 
 
                 if (wasmObjectURL === undefined) {
                     setStatus('Loading MediaInfo...');
-                    const wasmBlob = await (await fetch('https://unpkg.com/mediainfo.js@0.1.4/dist/MediaInfoModule.wasm')).blob();
+                    const wasmBlob = await (await fetch(WASM_MODULE_URL)).blob();
                     localObjectURL = URL.createObjectURL(wasmBlob);
                     setWasmObjectURL(localObjectURL);
                 }
@@ -46,9 +49,14 @@ export default function Analyze({ getSize, readChunk, filename, ready = true }: 
                 }
 
                 setStatus('Processing file...');
-                const result = await mediaInfo.analyzeData(() => totalSize, reader) as string;
-                setOutput(result);
-                setWorking(false);
+
+                try {
+                    setOutput(await mediaInfo.analyzeData(() => totalSize, reader) as string);
+                } catch (e) {
+                    log(`error while processing: ${e}`, LogSeverity.Error);
+                } finally {
+                    setWorking(false);
+                }
             })();
         }
     }, [ready]);
