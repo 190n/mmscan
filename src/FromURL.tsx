@@ -100,10 +100,10 @@ export default function FromURL({ url }: FromURLProps) {
     }, [url, usingProxy]);
 
     return (
-        <>
-            <Status />
-            <Log />
-            <Analyze getSize={getSize} readChunk={readChunk} ready={ready} filename={url} />
-        </>
+        <Analyze
+            getSize={getSize}
+            readChunk={readChunk}
+            ready={ready} filename={url}
+        />
     );
 }

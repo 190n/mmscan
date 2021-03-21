@@ -5,7 +5,9 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import { WASM_MODULE_URL, CHUNK_SIZE } from './config';
 import { statusState, progressState, workingState, wasmObjectURLState, LogSeverity } from './state';
-import { useLogger } from './Log';
+import Status from './Status';
+import Log, { useLogger } from './Log';
+import Uploader from './Uploader';
 
 export interface AnalyzeProps {
     getSize: () => number | Promise<number>;
@@ -63,6 +65,9 @@ export default function Analyze({ getSize, readChunk, filename, ready = true }: 
 
     return (
         <div class="Analyze">
+            <Uploader>upload another</Uploader>
+            <Status />
+            <Log />
             <h1>$ mediainfo <strong>{filename}</strong></h1>
             <pre>{output}</pre>
         </div>

@@ -2,11 +2,8 @@ import { h, Fragment } from 'preact';
 import { useRecoilValue } from 'recoil';
 import { route } from 'preact-router';
 
-import { filesState, LogSeverity } from './state';
+import { filesState } from './state';
 import Analyze from './Analyze';
-import Uploader from './Uploader';
-import Status from './Status';
-import Log from './Log';
 
 export interface FromUploadProps {
     id?: string;
@@ -35,11 +32,10 @@ export default function FromUpload({ id }: FromUploadProps) {
     }
 
     return (
-        <>
-            <Uploader>upload another</Uploader>
-            <Status />
-            <Log />
-            <Analyze getSize={getSize} readChunk={readChunk} filename={file.name} />
-        </>
+        <Analyze
+            getSize={getSize}
+            readChunk={readChunk}
+            filename={file.name}
+        />
     );
 }
