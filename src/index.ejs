@@ -7,7 +7,16 @@
         <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&display=swap" rel="stylesheet">
         <script async defer data-domain="mmscan.app" src="https://plausible.190n.org/js/plausible.js"></script>
     </head>
-    <body class="dark">
+    <body>
+        <script>
+            const pref = window.localStorage.getItem('colorModePreference');
+
+            if (pref == 'dark') {
+                document.body.classList.add('dark');
+            } else if (pref == 'system' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')) {
+                document.body.classList.add('dark');
+            }
+            </script>
         <main id="app"></main>
     </body>
 </html>

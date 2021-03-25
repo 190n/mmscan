@@ -5,7 +5,8 @@ import { RecoilRoot } from 'recoil';
 import Landing from './Landing';
 import FromURL from './FromURL';
 import FromUpload from './FromUpload';
-import { useColorMode } from './color-mode';
+import { ColorModeHandler } from './color-mode';
+import ColorModeSelector from './ColorModeSelector';
 
 export default function App() {
     return (
@@ -16,6 +17,8 @@ export default function App() {
                 <Route path="/results" component={FromUpload} />
                 <Route path="/:url+" component={FromURL} />
             </Router>
+            <ColorModeHandler />
+            <ColorModeSelector />
         </RecoilRoot>
     );
 }
