@@ -5,6 +5,7 @@ import { RecoilRoot } from 'recoil';
 import Landing from './Landing';
 import FromURL from './FromURL';
 import FromUpload from './FromUpload';
+import { useColorMode } from './color-mode';
 
 export default function App() {
     return (

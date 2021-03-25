@@ -43,13 +43,6 @@ export default function Landing() {
             <p>
                 <Uploader>choose file</Uploader> or drop anywhere on the page
             </p>
-            <button
-                style="position: absolute; left: 4px; bottom: 4px;"
-                onClick={() => document.body.classList.toggle('dark')}
-                class="button"
-            >
-                swap theme
-            </button>
             <DropTarget filesCallback={handleFiles} />
         </div>
     );
