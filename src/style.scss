@@ -35,8 +35,8 @@ body {
     width: 100%;
     max-width: calc(30ch * 2.5 + 1px);
     margin: auto;
-    // background-image: linear-gradient(#ffffff40, #ffffff40 5%, transparent 5%, transparent);
-    background-size: 100% 1rem;
+    // background-image: linear-gradient(#ffffff40, #ffffff40 10%, transparent 10%, transparent);
+    // background-size: 100% 0.5rem;
 }
 
 .Landing {
@@ -166,6 +166,17 @@ pre {
 .Log {
     list-style-type: none;
     padding: none;
+
+    li {
+        display: flex;
+        line-height: 1rem;
+        margin-bottom: 0.5rem;
+
+        .icon {
+            margin-right: 1ch;
+            height: 1rem;
+        }
+    }
 }
 
 .ColorModeSelector {

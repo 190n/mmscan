@@ -31,7 +31,10 @@ export default function Log() {
         <ol class="Log">
             {log.map(({ text, severity }) => (
                 <li>
-                    {logIcons[severity]} {text}
+                    <span class="icon">
+                        {logIcons[severity]}
+                    </span>
+                    {text}
                 </li>
             ))}
         </ol>
