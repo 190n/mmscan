@@ -35,5 +35,5 @@ export interface LogMessage {
 
 export const logState = atom<LogMessage[]>({
     key: 'logState',
-    default: [],
+    default: [{ text: 'test error', severity: LogSeverity.Error }, { text: 'test warning', severity: LogSeverity.Warning }],
 });

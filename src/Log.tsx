@@ -1,14 +1,15 @@
-import { h } from 'preact';
+import { h, JSX } from 'preact';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { FaBug, FaInfo, FaExclamationTriangle, FaExclamationCircle } from 'react-icons/fa';
 
 import { logState, LogSeverity } from './state';
 import { MIN_LOG_LEVEL } from './config';
 
-const logIcons: Record<LogSeverity, string> = {
-    [LogSeverity.Debug]:   '\u{1f41b}',
-    [LogSeverity.Info]:    '\u{1f6c8}',
-    [LogSeverity.Warning]: '\u26a0',
-    [LogSeverity.Error]:   '!\u20dd',
+const logIcons: Record<LogSeverity, JSX.Element> = {
+    [LogSeverity.Debug]:   <FaBug title="debug" />,
+    [LogSeverity.Info]:    <FaInfo title="info" />,
+    [LogSeverity.Warning]: <FaExclamationTriangle title="warning" />,
+    [LogSeverity.Error]:   <FaExclamationCircle title="error" />,
 };
 
 export function useLogger() {
@@ -30,8 +31,7 @@ export default function Log() {
         <ol class="Log">
             {log.map(({ text, severity }) => (
                 <li>
-                    [{LogSeverity[severity]}] {logIcons[severity]}
-                    {text}
+                    {logIcons[severity]} {text}
                 </li>
             ))}
         </ol>
