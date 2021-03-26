@@ -1,18 +1,24 @@
 import { h } from 'preact';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
-import { colorModePreferenceState, colorModeState } from './color-mode';
+import { ColorModePreference, colorModePreferenceState } from './color-mode';
+
+const names: Record<ColorModePreference, string> = {
+    light: 'light',
+    dark: 'dark',
+    system: 'system default',
+};
 
 export default function ColorModeSelector() {
-    const colorMode = useRecoilValue(colorModeState),
-        setColorModePreferece = useSetRecoilState(colorModePreferenceState);
+    const [colorModePreference, setColorModePreferece] = useRecoilState(colorModePreferenceState);
 
     return (
-        <div>
-            theme: {colorMode}
-            <a href="#" onClick={() => setColorModePreferece('light')}>set light</a>
-            <a href="#" onClick={() => setColorModePreferece('dark')}>set dark</a>
-            <a href="#" onClick={() => setColorModePreferece('system')}>set system</a>
-        </div>
+        <select class="ColorModeSelector" value={colorModePreference} onChange={e => setColorModePreferece(e.currentTarget.value as ColorModePreference)}>
+            {Object.keys(names).map((n: ColorModePreference) => (
+                <option value={n} key={n}>
+                    {names[n]}
+                </option>
+            ))}
+        </select>
     )
 }
