@@ -52,6 +52,10 @@ export default function FromURL({ url }: FromURLProps) {
                 }
             }
 
+            setWorking(true);
+            setProgress(undefined);
+            setStatus('Preparing request...');
+
             // fetch first without a proxy to see if we can
             // if this errors, either we need a proxy or range requests aren't supported
             switch (await checkUrl(url)) {
@@ -69,12 +73,14 @@ export default function FromURL({ url }: FromURLProps) {
                         log('Using a proxy server. Only 16 MiB per request may be sent through the proxy server.');
                     } else {
                         setFailed(true);
+                        setWorking(false);
                         log('If you can access the file through your browser, try downloading it and uploading it to mmscan.');
                     }
                     break;
                 case URLStatus.No:
                     // can't do it
                     setFailed(true);
+                    setWorking(false);
                     log('If you can access the file through your browser, try downloading it and uploading it to mmscan.');
                     break;
             }
