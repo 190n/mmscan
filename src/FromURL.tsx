@@ -1,12 +1,11 @@
-import { h, Fragment } from 'preact';
-import { useState, useEffect, useCallback, useRef } from 'preact/hooks';
+import { h } from 'preact';
+import { useState, useEffect, useCallback } from 'preact/hooks';
 import { useSetRecoilState } from 'recoil';
 
-import { PROXY_URL, PROXY_CAP, CHUNK_SIZE } from './config';
+import { PROXY_URL } from './config';
 import Analyze from './Analyze';
 import { statusState, progressState, workingState, LogSeverity } from './state';
-import Log, { useLogger } from './Log';
-import Status from './Status';
+import { useLogger } from './Log';
 
 interface FromURLProps {
     url: string;
@@ -26,6 +25,8 @@ export default function FromURL({ url }: FromURLProps) {
 
     useEffect(() => {
         (async () => {
+            plausible('scan-url');
+
             async function checkUrl(url: string): Promise<URLStatus> {
                 try {
                     const response = await fetch(url, {
